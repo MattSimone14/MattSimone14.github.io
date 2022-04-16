@@ -33,7 +33,7 @@
                 if (request.status == 200) {    
                     var templateText = document.getElementById('tableTemplate').innerHTML;
                     var compiledTemplateText = Handlebars.compile(templateText);       
-                    compiledHtml = compiledTemplateText({ rows: meal_items })          
+                    compiledHtml = compiledTemplateText({ rows: cit5students })          
                     document.getElementById('tableData').innerHTML = compiledHtml; 
                 }
                 else {
