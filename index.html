@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+ <html>
+ <head> 
+    <meta charset="UTF-8"> 
+    <title>Program 5</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script type="text/x-handlebars-template" id="tableTemplate">
+      <table class="table table-striped">
+          <tr><th>Item</th><th>Meal</th><th>Category</th><th>Portion</th></tr>
+             {{#each rows}}
+                <tr>
+                     <td>{{name}}</td><td>{{major}}</td><td>{{midterm}}</td><td>{{final}}</td>
+                </tr>
+             {{/each}}
+      </table>
+    </script>
+    <script>
+        function getData(selected_major) {     
+            var request = new XMLHttpRequest();
+            request.open('GET', 'cit5students.json');      
+         
+            request.onload = function() {                     
+                var data = JSON.parse(request.responseText);    
+
+                cit5students = data.filter(getMajor)       
+                function getMajor(name) {
+                    return name.major == selected_major;   
+                }
+                
+                if (request.status == 200) {    
+                    var templateText = document.getElementById('tableTemplate').innerHTML;
+                    var compiledTemplateText = Handlebars.compile(templateText);       
+                    compiledHtml = compiledTemplateText({ rows: meal_items })          
+                    document.getElementById('tableData').innerHTML = compiledHtml; 
+                }
+                else {
+                    document.querySelector('#tableData').innerHTML = "There was an error, or menu items not found";
+                }
+            }
+             
+            request.send(null);
+        }
+    </script>
+ </head>
+<body>
+    <div class = 'container'>
+        <h3>Select a Major</h3>
+        <form>
+            <button type="button" id="showData">CIT Majors</button>
+            <button type="button" id="showData">Business Majors</button>
+        </form><br>
+        <h3>We filter our dataset by meal</h3>
+        <div id='tableData'></div>
+    </div>
+</body>
+</html>
