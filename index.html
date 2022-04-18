@@ -26,8 +26,8 @@
                 var data = JSON.parse(request.responseText);    
 
                 cit5students = data.filter(getMajor)       
-                function getMajor(item) {
-                    return item.major == selected_major;   
+                function getMajor(name) {
+                    return name.major == selected_major;   
                 }
                 
                 if (request.status == 200) {    
